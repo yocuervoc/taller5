@@ -1,8 +1,8 @@
 class Caja
   attr_accessor :fila, :cliente
-#
-  def initialize
-    @fila=[]
+
+  def initialize(fila)
+    @fila=fila
   end
 
   def atender_cliente(numero_fila)
@@ -68,15 +68,33 @@ end
 
 class Simulacion
 
-  attr_accessor :cajas, :fila :numero_de_clientes, :sumatoria_tiempo_espera, :cantidad_de_cajas, :cantidad_de_filas
+  attr_accessor :cajas, :filas, :numero_de_clientes, :sumatoria_tiempo_espera, :cantidad_de_cajas, :cantidad_de_filas
 
-  def initialize(caja, fila, mero_de_clientes, sumatoria_tiempo_espera, cantidad_de_cajas, cantidad_de_filas)
-    @caja=[]
-    @fila=[]
+  def initialize(cantidad_de_cajas, cantidad_de_filas)
+    @cajas=[]
+    @filas=[]
     @numero_de_clientes=0
     @sumatoria_tiempo_espera=0
     @cantidad_de_cajas=cantidad_de_cajas
     @cantidad_de_filas=cantidad_de_filas
+
+    if cantidad_de_filas>1
+      cantidad_de_filas.times do
+        filas.push([])
+      end
+    end
+
+    for i in (0..cantidad_de_cajas)
+      if cantidad_de_filas==1
+        for i in (0..cantidad_de_cajas)
+          cajas[i]=Caja.new(filas)
+        end
+      else
+        for i in (0..cantidad_de_cajas)
+          cajas[i]=Caja.new(filas[i])
+        end
+      end
+    end
   end
 
   def tiempo_espera_caja
@@ -88,7 +106,7 @@ class Simulacion
     n=random_name.length
 
     if caja.fila[0].class= Cliente
-      fila.push(Clinete.new(random_name[rand(n)]))
+      fila.push(Cliente.new(random_name[rand(n)]))
     end
 
     if caja.fila[0].class==Array
@@ -105,8 +123,7 @@ class Simulacion
   end
 
 end
-
-caja=Caja.new()
+fila=[]
+caja=Caja.new(fila)
 cliente=Cliente.new("N")
-cliente2=Cliente.new("N")
-caja.dibujar_caja
+simulacion=Simulacion.new(4,1)
