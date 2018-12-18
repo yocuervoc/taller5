@@ -1,6 +1,6 @@
 class Caja
   attr_accessor :fila, :cliente
-
+#
   def initialize
     @fila=[]
   end
@@ -53,15 +53,30 @@ class Cliente
   end
 end
 
+class Fila
+   attr_accessor :clientes
+
+   def initialize()
+    @clientes=[]
+   end
+
+   def dibujar_fila
+     # TODO:
+   end
+
+end
 
 class Simulacion
 
-  attr_accessor :caja, :numero_de_clientes, :sumatoria_tiempo_espera
+  attr_accessor :cajas, :fila :numero_de_clientes, :sumatoria_tiempo_espera, :cantidad_de_cajas, :cantidad_de_filas
 
-  def initialize(caja,  numero_de_clientes, sumatoria_tiempo_espera)
-    @caja=caja
+  def initialize(caja, fila, mero_de_clientes, sumatoria_tiempo_espera, cantidad_de_cajas, cantidad_de_filas)
+    @caja=[]
+    @fila=[]
     @numero_de_clientes=0
     @sumatoria_tiempo_espera=0
+    @cantidad_de_cajas=cantidad_de_cajas
+    @cantidad_de_filas=cantidad_de_filas
   end
 
   def tiempo_espera_caja
@@ -91,10 +106,7 @@ class Simulacion
 
 end
 
-
 caja=Caja.new()
 cliente=Cliente.new("N")
 cliente2=Cliente.new("N")
-
-
 caja.dibujar_caja
