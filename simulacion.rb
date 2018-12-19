@@ -20,8 +20,8 @@ class Caja
   def atender_cliente
 
     if !fila.empty?
-      cliente=fila.delete_at(0)
-      cliente.tiempo_en_caja=4+rand(21)
+      @cliente=fila.delete_at(0)
+      @cliente.tiempo_en_caja=4+rand(21)
       puts "atendiendo a #{cliente.nombre}"
     end
 
@@ -31,9 +31,12 @@ class Caja
     print "          |C|"
   end
 
-  def dibujar_clente_caja
-    #print cliente
-    print "          |#{cliente.nombre}|"
+  def dibujar_cliente_caja
+    if cliente.nombre==nil
+      print "          | |"
+    else
+      print "          |#{cliente.nombre}|"
+    end
   end
 end
 
@@ -46,7 +49,7 @@ class Fila
    end
 
    def dibujar_fila
-     # TODO:
+     print "no sale          |#{clientes.nombre}|"
    end
 
 end
@@ -103,21 +106,102 @@ class Simulacion
       filas.each do |i|
         if i.length < fila_mas_corta #< >
           fila_mas_corta=contador
-          puts "i.l: #{i.length}, fi ms: #{fila_mas_corta}"
-          puts "contadot #{contador}"
         end
         contador+=1
       end
       filas[fila_mas_corta].push(Cliente.new(random_name[rand(n)]))
-      puts "encolo en array #{fila_mas_corta}"
+
     end
   end
 
 end
 
-fila=[]
-#caja=Caja.new(fila)
-cliente=Cliente.new("N")
+class App
+
+  puts "Tipos de simulacion:"
+  puts "* Unica fila: oprima 1"
+  puts "* multiples filas: oprima 2"
+  cantidad_de_filas=gets.to_i
+  puts "ingrese la cantidad de cajas"
+  cantidad_de_cajas=gets.to_i
+
+  if cantidad_de_filas==1
+    simulacion=Simulacion.new(cantidad_de_cajas,1)
+  else
+    simulacion=Simulacion.new(cantidad_de_cajas,cantidad_de_cajas)
+
+  end
+
+  puts "ingrese le tiempo de simulacion"
+  tiempo_de_simulacion=gets.to_i
+  #puts "ingrse el delta"
+  #delta=gets.to_i
+
+  tiempo_reloj=1
+  while tiempo_reloj<=tiempo_de_simulacion
+
+    if tiempo_reloj%3 == 0
+      clientes_nuevos=rand(5)
+      clientes_nuevos.times do
+        simulacion.encolar_cliente
+      end
+    end
+
+    c=0
+    simulacion.cajas.each do |i|
+      simulacion.cajas[c].dibujar_caja
+      c+=1
+    end
+    puts ""
+
+
+    puts simulacion.filas
+
+    tiempo_reloj+=1
+=begin
+
+
+    c=0
+    puts simulacion.filas[0].class
+    simulacion.filas.each do |i|
+      puts simulacion.filas[0].class
+      simulacion.filas.dibujar_fila
+      c+=1
+    end
+    puts ""
+
+    tiempo_reloj+=1
+
+=end
+  end
+
+
+end
+
+
+
+
+
+App.new()
+
+
+=begin
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 simulacion=Simulacion.new(4,4)
 
 simulacion.encolar_cliente
@@ -148,9 +232,12 @@ simulacion.cajas.each do |i|
   puts "nombre de cliente at #{simulacion.cajas[c].cliente.nombre}"
   c+=1
 end
+
 puts ""
 puts "despues"
 puts ""
+
+
 simulacion.filas.each do |i|
   i.each do |j|
     print "#{j.nombre} "
@@ -164,6 +251,25 @@ simulacion.cajas.each do |i|
   c+=1
 end
 c=0
+
+
+c=0
+puts ""
+
+simulacion.cajas.each do |i|
+  simulacion.cajas[c].dibujar_clente_caja
+  c+=1
+end
+puts ""
+
+c=0
+simulacion.cajas.each do |i|
+  print "  #{simulacion.cajas[c].cliente.tiempo_en_caja}"
+  c+=1
+end
+puts ""
+=begin
+
 puts ""
 simulacion.cajas.each do |i|
   puts simulacion.cajas[c].fila.class
@@ -177,12 +283,4 @@ simulacion.cajas.each do |i|
   c+=1
 end
 
-
-c=0
-puts ""
-
-simulacion.cajas.each do |i|
-  simulacion.cajas[c].dibujar_clente_caja
-  c+=1
-end
-puts ""
+=end
