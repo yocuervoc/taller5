@@ -274,7 +274,6 @@ class App
 
     simulacion.filas.dibujar_fila
 
-
     sleep(delta)
     tiempo_reloj+=1
     puts "________________________________________________________"
@@ -291,3 +290,5 @@ puts "tiempo promedio de espera de los clientes atndidos fue de: #{simulacion.su
 end
 
 App.new()
+
+#by Yocc
