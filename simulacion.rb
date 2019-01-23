@@ -187,6 +187,7 @@ class Simulacion
         if i.length < fila_mas_corta#< >
           if cajas[contador].cliente.nombre==nil
             posicion= contador
+            contador+=1
             break
           else
             fila_mas_corta=i.length
