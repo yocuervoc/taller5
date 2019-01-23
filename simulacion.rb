@@ -147,6 +147,7 @@ class Simulacion
     @cantidad_de_cajas=cantidad_de_cajas
     @cantidad_de_filas=cantidad_de_filas
 
+
     if cantidad_de_filas > 1
       cantidad_de_filas.times do
         filas.clientes.push([])
@@ -292,3 +293,4 @@ end
 App.new()
 
 #by Yocc
+
