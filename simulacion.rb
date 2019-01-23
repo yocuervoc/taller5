@@ -147,6 +147,7 @@ class Simulacion
     @cantidad_de_cajas=cantidad_de_cajas
     @cantidad_de_filas=cantidad_de_filas
 
+
     if cantidad_de_filas > 1
       cantidad_de_filas.times do
         filas.clientes.push([])
@@ -204,3 +205,92 @@ class Simulacion
   end
 
 end
+
+class App
+
+  puts "Tipos de simulacion:"
+  puts "* Unica fila: oprima 1"
+  puts "* multiples filas: oprima 2"
+  cantidad_de_filas=gets.to_i
+  puts "ingrese la cantidad de cajas"
+  cantidad_de_cajas=gets.to_i
+
+  if cantidad_de_filas==1
+    simulacion=Simulacion.new(cantidad_de_cajas,1)
+  else
+    simulacion=Simulacion.new(cantidad_de_cajas,cantidad_de_cajas)
+
+  end
+
+  puts "ingrese le tiempo de simulacion"
+  tiempo_de_simulacion=gets.to_i
+  puts "ingrese el delta"
+  delta=gets.to_i
+  puts "________________________________________________________"
+  tiempo_reloj=1
+  while tiempo_reloj<=tiempo_de_simulacion
+    puts "  Minuto #{tiempo_reloj}"
+    puts "________________________________________________________"
+
+    if tiempo_reloj%3 == 0
+      clientes_nuevos=rand(5)
+      puts "encola #{clientes_nuevos} clientes"
+      simulacion.numero_de_clientes+=clientes_nuevos
+      clientes_nuevos.times do
+        simulacion.encolar_cliente
+      end
+    end
+
+
+    simulacion.filas.aumenta_tiempo_espera_fila
+    c=0
+    simulacion.cajas.each do |i|
+      simulacion.cajas[c].dibujar_caja
+      c+=1
+    end
+    c=0
+    simulacion.cajas.each do |i|
+      simulacion.cajas[c].atender_cliente
+      c+=1
+    end
+    puts ""
+    c=0
+    simulacion.cajas.each do |i|
+      simulacion.cajas[c].dibujar_cliente_caja
+      c+=1
+    end
+    c=0
+    simulacion.cajas.each do |i|
+      simulacion.cajas[c].disminuir_tiempo_en_caja
+      c+=1
+    end
+    c=0
+    simulacion.cajas.each do |i|
+      simulacion.cajas[c].abandonar_caja
+      c+=1
+    end
+
+    puts ""
+    puts "       ------------------------------------------------"
+
+    simulacion.filas.dibujar_fila
+
+    sleep(delta)
+    tiempo_reloj+=1
+    puts "________________________________________________________"
+  end
+
+  c=0
+  simulacion.cajas.each do |i|
+    simulacion.sumatoria_tiempo_espera += simulacion.cajas[c].sumatoria_tiempo_espera_caja
+    c+=1
+  end
+
+puts "tiemp total de espera de todos lo clientes atendidos fue de #{simulacion.sumatoria_tiempo_espera}"
+puts "tiempo promedio de espera de los clientes atndidos fue de: #{simulacion.sumatoria_tiempo_espera/simulacion.numero_de_clientes} minutos"
+end
+
+App.new()
+
+#by Yocc
+
