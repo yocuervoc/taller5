@@ -1,11 +1,11 @@
-# Razonable: 2
+## Razonable: 2
 El codigo es medianamente facil de extender y escalar
 
-# Facil de entender: 2
+## Facil de entender: 2
 El codigo es medianamente facil de entender
 
-# Siple:3
+## Simple:3
 El codigo es simple y optimo
 
-# Funcional: 3
+## Funcional: 3
 Al compilar se cumplen los criterios
